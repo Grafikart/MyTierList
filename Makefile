@@ -3,6 +3,10 @@
 help: ## Display this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+deploy: ## Déploie une nouvelle version
+	php artisan app:export
+	rsync -avH ./storage/app/private/movies.html -e ssh jonathan-boyer:~/sites/jonathan-boyer.fr/public/movies.html
+
 lint: ## Format the code and generates new helpers
 	./vendor/bin/pint
 	php artisan ide-helper:generate --helpers

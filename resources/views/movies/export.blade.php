@@ -14,7 +14,11 @@
 </head>
 <body class="font-sans antialiased px-4 my-10">
 
-    <h1 class="text-2xl font-bold">Films vu en {{ date('Y') }}</h1>
+    <h1 class="text-2xl font-bold mb-1">Films vus entre 2024 et {{ date('Y') }} </h1>
+
+    <p class="text-slate-500 text-md">
+        Liste totalement subjective basée sur mes goûts.
+    </p>
 
     <div class="my-4">
         <div class="flex flex-col gap-4">

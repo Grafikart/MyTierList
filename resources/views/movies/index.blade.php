@@ -15,7 +15,7 @@
 <body class="font-sans antialiased px-4 my-10">
 
     <div class="flex justify-between items-center">
-        <h1 class="text-2xl font-bold">Films vu en {{ date('Y') }}</h1>
+        <h1 class="text-2xl font-bold">Tierlist</h1>
         <div class="flex items-center gap-4">
             <a href="{{ route('export') }}" class="btn btn-neutral">
                 <svg class="size-[1.2em]" fill="currentColor" viewBox="0 0 24 24">

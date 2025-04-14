@@ -5,14 +5,5 @@
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 
-@theme {
-    --color-s: #2ecc71;
-    --color-a: #3498db;
-    --color-b: #f1c40f;
-    --color-c: #e67e22;
-    --color-d: #e74c3c;
-    --color-e: #7f8c8d;
-}
-
 @plugin "daisyui";
 

@@ -20,21 +20,18 @@ class MoviesController extends Controller
     public function export()
     {
 
-        return response()
-            ->view('movies.export', [
-            'css' => file_get_contents(public_path('build/assets/app.css')),
-            'movies' => Movie::orderBy('position', 'ASC')->get()->groupBy('tier'),
-            'tiers' => collect(config('app.tiers'))
-        ])
-            ->header('Content-Type', 'text/html')
-            ->header('Content-Disposition', 'attachment; filename="movies.html"');
+        return view('movies.export', [
+                'css' => file_get_contents(public_path('build/assets/app.css')),
+                'movies' => Movie::orderBy('position', 'ASC')->get()->groupBy('tier'),
+                'tiers' => collect(config('app.tiers'))
+            ]);
     }
 
     public function sync(Request $request, SimklAPI $api)
     {
         $code = $request->query('code');
 
-        if (! $code) {
+        if (!$code) {
             return redirect(
                 $api->start(route('sync'))
             );
@@ -44,23 +41,23 @@ class MoviesController extends Controller
         $lastMovie = Movie::orderBy('created_at', 'DESC')->first();
         $date = $lastMovie?->created_at->addDay() ?? now()->startOfYear()->subDay();
 
-        $movies = $api->watchList('movies', $date);
-        foreach($movies as $movie) {
+        $movies = $api->watchList('movies', $date->subYears(3));
+        foreach ($movies as $movie) {
             Movie::firstOrCreate([
                 'imdb_id' => $movie['movie']['ids']['imdb'],
-                ], [
-                'title'=> $movie['movie']['title'],
+            ], [
+                'title' => $movie['movie']['title'],
                 'poster' => $movie['movie']['poster'],
                 'created_at' => $movie['last_watched_at'],
             ]);
         }
 
         $shows = $api->watchList('shows', $date);
-        foreach($shows as $show) {
+        foreach ($shows as $show) {
             Movie::firstOrCreate([
                 'imdb_id' => $show['show']['ids']['imdb'],
             ], [
-                'title'=> $show['show']['title'],
+                'title' => $show['show']['title'],
                 'poster' => $show['show']['poster'],
                 'created_at' => $show['last_watched_at'],
             ]);
