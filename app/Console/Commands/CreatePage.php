@@ -29,8 +29,10 @@ class CreatePage extends Command
     {
         $html = view('movies.export', [
             'css' => file_get_contents(public_path('build/assets/app.css')),
+            'years' => Movie::years(),
+            'current_year' => now()->year,
             'movies' => Movie::orderBy('position', 'ASC')->get()->groupBy('tier'),
-            'tiers' => collect(config('app.tiers'))
+            'tiers' => collect(config('app.tiers')),
         ])->render();
         Storage::put('movies.html', $html);
         $this->info('Page created successfully');

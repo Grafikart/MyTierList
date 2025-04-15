@@ -17,10 +17,10 @@ namespace App\Models{
  *
  * @property int $id
  * @property string $title
- * @property string $imdb_id
- * @property string $poster
+ * @property string|null $imdb_id
+ * @property string|null $poster
  * @property int $position
- * @property string $tier
+ * @property string|null $tier
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Movie newModelQuery()

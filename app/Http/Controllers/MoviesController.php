@@ -13,25 +13,26 @@ class MoviesController extends Controller
     {
         return view('movies.index', [
             'movies' => Movie::orderBy('position', 'ASC')->get(),
-            'tiers' => collect(config('app.tiers'))
+            'tiers' => collect(config('app.tiers')),
         ]);
     }
 
     public function export()
     {
-
         return view('movies.export', [
-                'css' => file_get_contents(public_path('build/assets/app.css')),
-                'movies' => Movie::orderBy('position', 'ASC')->get()->groupBy('tier'),
-                'tiers' => collect(config('app.tiers'))
-            ]);
+            'movies' => Movie::orderBy('position', 'ASC')->get()->groupBy('tier'),
+            'years' => Movie::years(),
+            'current_year' => now()->year,
+            'tiers' => collect(config('app.tiers')),
+            'web' => true,
+        ]);
     }
 
     public function sync(Request $request, SimklAPI $api)
     {
-        $code = $request->query('code');
+        $code = $request->query->get('code');
 
-        if (!$code) {
+        if (! $code) {
             return redirect(
                 $api->start(route('sync'))
             );
@@ -39,9 +40,9 @@ class MoviesController extends Controller
 
         $api->token($code);
         $lastMovie = Movie::orderBy('created_at', 'DESC')->first();
-        $date = $lastMovie?->created_at->addDay() ?? now()->startOfYear()->subDay();
+        $date = $lastMovie->created_at->subDay() ?? now()->startOfYear()->subDay();
 
-        $movies = $api->watchList('movies', $date->subYears(3));
+        $movies = $api->watchList('movies', $date);
         foreach ($movies as $movie) {
             Movie::firstOrCreate([
                 'imdb_id' => $movie['movie']['ids']['imdb'],
@@ -62,6 +63,7 @@ class MoviesController extends Controller
                 'created_at' => $show['last_watched_at'],
             ]);
         }
+
         return to_route('home');
     }
 
@@ -72,6 +74,7 @@ class MoviesController extends Controller
     {
         $movie->tier = $tier;
         $movie->save();
+
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
@@ -83,9 +86,10 @@ class MoviesController extends Controller
         $positions = $request->json('positions');
         foreach ($positions as $position) {
             Movie::where('id', $position['id'])->update([
-                'position' => $position['position']
+                'position' => $position['position'],
             ]);
         }
+
         return response(null, Response::HTTP_NO_CONTENT);
     }
 }
