@@ -46,7 +46,7 @@
                         <div class="text-xs">{{ $tier['description']}}</div>
                     </div>
                 </div>
-                <div class="grid w-full flex-wrap gap-4" style="grid-template-columns: repeat(auto-fit, 170px)">
+                <div class="grid w-full gap-2 sm:gap-4" style="grid-template-columns: repeat(auto-fill, min(170px, calc((100vw - 5rem - 20px) * 0.5)))">
                     @foreach(($movies[$tier['letter']] ?? []) as $k => $movie)
                         @php
                             $poster = sprintf("https://simkl.in/posters/%s_c.webp", $movie->poster);
