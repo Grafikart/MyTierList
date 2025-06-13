@@ -6,6 +6,10 @@ help: ## Display this help
 deploy: ## Déploie une nouvelle version
 	php artisan app:export
 	rsync -avH ./storage/app/private/movies.html -e ssh jonathan-boyer:~/sites/jonathan-boyer.fr/public/movies.html
+	rsync -avH ./database/database.sqlite -e ssh jonathan-boyer:~/sites/jonathan-boyer.fr/var/movies.sqlite
+
+sync: ## Récupère la dernière version de la base de données
+	rsync -avH -e ssh jonathan-boyer:~/sites/jonathan-boyer.fr/var/movies.sqlite ./database/database.sqlite
 
 lint: ## Format the code and generates new helpers
 	./vendor/bin/pint

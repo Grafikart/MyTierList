@@ -27,11 +27,14 @@
             Liste totalement subjective basée sur mes goûts.
         </p>
     </div>
-    <div class="flex gap-2 items-end text-slate-500">
-        @foreach($years as $year)
-            <a href="#{{ $year }}" class="year text-3xl font-semibold aria-current:text-slate-100"
-               @if($year === $current_year) aria-current="true" @endif>{{ $year }}</a>
-        @endforeach
+    <div>
+        <div class="text-slate-500 text-end">Année de visionnage</div>
+        <div class="flex gap-2 items-baseline text-slate-500">
+            @foreach($years as $year)
+                <a href="#{{ $year }}" class="year text-3xl font-semibold aria-current:text-slate-100"
+                   @if($year === $current_year) aria-current="true" @endif>{{ $year }}</a>
+            @endforeach
+        </div>
     </div>
 </div>
 
