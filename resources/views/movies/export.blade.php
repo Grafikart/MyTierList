@@ -21,10 +21,15 @@
 
 <div class="flex flex-col gap-2 justify-between sm:items-center sm:flex-row">
     <div>
-        <h1 class="text-2xl font-bold mb-1">Ma Tier list de films / séries</h1>
+        <h1 class="text-2xl font-bold mb-1">
+            Ma Tier list de films / séries
+        </h1>
 
-        <p class="text-slate-500 text-md">
+        <p class="text-slate-500 text-md flex gap-2 items-center">
             Liste totalement subjective basée sur mes goûts.
+            <a href="https://simkl.com/movies/all/all-types/all-countries/completed/all-years/release-date/user-6747973/" target="_blank" class="hover:text-white flex items-center">
+                (SIMKL&nbsp;<svg class="size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 3h6v6m-11 5L21 3m-3 10v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>)
+            </a>
         </p>
     </div>
     <div>
