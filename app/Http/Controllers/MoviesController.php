@@ -12,15 +12,17 @@ class MoviesController extends Controller
     public function index()
     {
         return view('movies.index', [
-            'movies' => Movie::orderBy('position', 'ASC')->get(),
+            'movies' => Movie::orderBy('position', 'ASC')->where('created_at', '>', now()->startOfYear())->get(),
             'tiers' => collect(config('app.tiers')),
         ]);
     }
 
     public function export()
     {
+        $movies = Movie::orderBy('position', 'ASC')->get();
         return view('movies.export', [
-            'movies' => Movie::orderBy('position', 'ASC')->get()->groupBy('tier'),
+            'movies' => $movies->sortBy('created_at', SORT_NATURAL)->reverse(),
+            'movies_by_tiers' => $movies->groupBy('tier'),
             'years' => Movie::years(),
             'current_year' => now()->year,
             'tiers' => collect(config('app.tiers')),

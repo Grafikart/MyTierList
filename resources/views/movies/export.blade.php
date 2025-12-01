@@ -43,8 +43,39 @@
     </div>
 </div>
 
+{{--
 <div class="my-4">
-    <div class="flex flex-col gap-4">
+    @foreach($movies as $k => $movie)
+        @php
+            $poster = sprintf("https://simkl.in/posters/%s_c.webp", $movie->poster);
+            $url = sprintf("https://www.imdb.com/title/%s/", $movie->imdb_id);
+            $tier = $tiers->where('letter', $movie->tier)->first();
+        @endphp
+        <a
+            title="{{ $movie->title }}"
+            href="{{ $url }}"
+            target="_blank"
+            class="-mt-[1px] flex items-center gap-4 text-lg py-2 border-y-1 border-y-slate-700 border-dashed"
+        >
+            <img
+                alt="{{ $movie->title }}"
+                src={{ $poster }}
+                alt="{{ $movie->title }}"
+                style="border-color: var({{ str_replace('bg-','--color-', $tier['color'] ?? '') }})"
+                width="170"
+                height="250"
+                class="w-20 border-4 rounded-sm"
+            />
+            <div class="{{ $tier['color'] ?? '' }} text-md leading-none py-1 px-2 rounded-md font-semibold -mr-2">
+                {{ $movie->tier }}
+            </div>
+            {{ $movie->title }}
+        </a>
+    @endforeach
+</div>
+--}}
+
+<div class="flex flex-col gap-4 my-4">
         @foreach($tiers as $tier)
             <div class="flex flex-col sm:flex-row rounded-md p-4 gap-4 {{ $tier['color'] }}">
                 <div class="w-[200px] flex gap-4 sm:block">
@@ -55,7 +86,7 @@
                     </div>
                 </div>
                 <div class="grid w-full gap-2 sm:gap-4" style="grid-template-columns: repeat(auto-fill, min(170px, calc((100vw - 5rem - 20px) * 0.5)))">
-                    @foreach(($movies[$tier['letter']] ?? []) as $k => $movie)
+                    @foreach(($movies_by_tiers[$tier['letter']] ?? []) as $k => $movie)
                         @php
                             $poster = sprintf("https://simkl.in/posters/%s_c.webp", $movie->poster);
                             $url = sprintf("https://www.imdb.com/title/%s/", $movie->imdb_id);
@@ -79,7 +110,7 @@
             </div>
         @endforeach
     </div>
-</div>
+
 <script>
     const onHashChange = () => {
         if (!window.location.hash) {

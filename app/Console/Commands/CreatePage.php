@@ -27,12 +27,15 @@ class CreatePage extends Command
      */
     public function handle()
     {
+        $movies = Movie::orderBy('position', 'ASC')->get();
         $html = view('movies.export', [
             'css' => file_get_contents(public_path('build/assets/app.css')),
+            'movies' => $movies->sortBy('created_at', SORT_NATURAL)->reverse(),
+            'movies_by_tiers' => $movies->groupBy('tier'),
             'years' => Movie::years(),
             'current_year' => now()->year,
-            'movies' => Movie::orderBy('position', 'ASC')->get()->groupBy('tier'),
             'tiers' => collect(config('app.tiers')),
+            'web' => true,
         ])->render();
         Storage::put('movies.html', $html);
         $this->info('Page created successfully');

@@ -15,6 +15,7 @@ class Movie extends Model
     public static function years(): Collection
     {
         return Movie::selectRaw("strftime('%Y', created_at) as year")
+            ->whereNotNull('created_at')
             ->groupByRaw('year')
             ->pluck('year')
             ->values()
