@@ -17,6 +17,13 @@
     <div class="flex justify-between items-center">
         <h1 class="text-2xl font-bold">Tierlist</h1>
         <div class="flex items-center gap-4">
+            <form method="get">
+                <select class="select select-bordered" name="year" onchange="this.closest('form').submit()">
+                    @foreach($years as $year)
+                        <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>{{ $year }}</option>
+                    @endforeach
+                </select>
+            </form>
             <a href="{{ route('export') }}" class="btn btn-neutral">
                 <svg class="size-[1.2em]" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M22 4c0-.5523-.4477-1-1-1H3c-.5523 0-1 .4477-1 1v16c0 .5523.4477 1 1 1h18c.5523 0 1-.4477 1-1V4ZM4 15h3.416c.7716 1.7659 2.5337 3 4.584 3 2.0503 0 3.8124-1.2341 4.584-3H20v4H4v-4ZM4 5h16v8h-5c0 1.6569-1.3431 3-3 3s-3-1.3431-3-3H4V5Zm12 6h-3v3h-2v-3H8l4-4.5 4 4.5Z"/>

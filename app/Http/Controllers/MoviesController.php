@@ -9,11 +9,19 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MoviesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $year = $request->query->getInt('year', now()->year);
+        $movies = Movie::query()
+            ->orderBy('position', 'ASC')
+            ->whereYear('created_at', $year)
+            ->get();
+
         return view('movies.index', [
-            'movies' => Movie::orderBy('position', 'ASC')->where('created_at', '>', now()->startOfYear())->get(),
+            'movies' => $movies,
             'tiers' => collect(config('app.tiers')),
+            'years' => Movie::years(),
+            'current_year' => $year,
         ]);
     }
 
