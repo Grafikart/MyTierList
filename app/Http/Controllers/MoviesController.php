@@ -20,6 +20,7 @@ class MoviesController extends Controller
     public function export()
     {
         $movies = Movie::orderBy('position', 'ASC')->get();
+
         return view('movies.export', [
             'movies' => $movies->sortBy('created_at', SORT_NATURAL)->reverse(),
             'movies_by_tiers' => $movies->groupBy('tier'),

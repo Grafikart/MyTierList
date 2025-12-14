@@ -13,9 +13,6 @@ sync: ## Récupère la dernière version de la base de données
 
 lint: ## Format the code and generates new helpers
 	./vendor/bin/pint
-	php artisan ide-helper:generate --helpers
-	php artisan ide-helper:meta
-	php artisan ide-helper:models -M
 	./vendor/bin/phpstan analyse --memory-limit=2G
 
 dev: ## Start dev server

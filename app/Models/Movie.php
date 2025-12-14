@@ -5,9 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
-/**
- * @mixin IdeHelperMovie
- */
 class Movie extends Model
 {
     protected $guarded = [];
